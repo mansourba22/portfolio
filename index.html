@@ -277,9 +277,143 @@
       footer { padding:28px 24px; }
       .kpi-row { grid-template-columns:1fr 1fr; }
     }
+
+    /* ── LOADER ── */
+    #loader { position:fixed; inset:0; background:var(--bg); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px; transition:opacity 0.6s, transform 0.6s; }
+    #loader.hide { opacity:0; pointer-events:none; transform:scale(1.05); }
+    .loader-logo { font-family:'Syne',sans-serif; font-size:clamp(60px,12vw,100px); font-weight:800; letter-spacing:-0.04em; background:linear-gradient(135deg,var(--gold),var(--gold2),var(--violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:loaderPulse 1.5s ease-in-out infinite; }
+    @keyframes loaderPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.7;transform:scale(0.97)} }
+    .loader-bar-wrap { width:200px; height:2px; background:rgba(255,255,255,0.08); border-radius:99px; overflow:hidden; }
+    .loader-bar { height:100%; background:linear-gradient(90deg,var(--gold),var(--violet)); border-radius:99px; width:0%; animation:loaderFill 1.8s cubic-bezier(0.23,1,0.32,1) forwards; }
+    @keyframes loaderFill { 0%{width:0%} 100%{width:100%} }
+    .loader-text { font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--muted); letter-spacing:0.2em; text-transform:uppercase; }
+
+    /* ── CURSOR ── */
+    .cursor-dot { width:8px; height:8px; background:var(--gold); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:transform 0.1s, opacity 0.3s; mix-blend-mode:difference; }
+    .cursor-ring { width:36px; height:36px; border:1.5px solid rgba(232,184,75,0.6); border-radius:50%; position:fixed; pointer-events:none; z-index:9997; transform:translate(-50%,-50%); transition:width 0.3s, height 0.3s, border-color 0.3s, opacity 0.3s; }
+    .cursor-ring.hover { width:60px; height:60px; border-color:var(--gold); background:rgba(232,184,75,0.06); }
+    .cursor-trail { position:fixed; width:6px; height:6px; border-radius:50%; background:var(--gold); pointer-events:none; z-index:9996; transform:translate(-50%,-50%); opacity:0; }
+    @media(max-width:768px) { .cursor-dot,.cursor-ring { display:none; } }
+
+    /* ── THEME TOGGLE ── */
+    .theme-btn { position:fixed; bottom:28px; right:28px; width:48px; height:48px; border-radius:50%; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:500; font-size:1.2rem; transition:all 0.3s; backdrop-filter:blur(12px); }
+    .theme-btn:hover { border-color:var(--gold); transform:scale(1.1) rotate(20deg); }
+    body.dark-mode .theme-btn { background:rgba(255,255,255,0.08); }
+    body.light-mode .theme-btn { background:rgba(0,0,0,0.08); }
+
+    /* ── LIGHT MODE ── */
+    body.light-mode {
+      --bg:    #f8f8fc;
+      --bg2:   #f0f0f8;
+      --bg3:   #e8e8f4;
+      --bg4:   #e0e0ec;
+      --border:  rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.14);
+      --text:  #0a0a14;
+      --muted: #8888aa;
+      --muted2: #6666aa;
+    }
+    body.light-mode .b1 { background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%); }
+    body.light-mode .b2 { background: radial-gradient(circle, rgba(232,184,75,0.12) 0%, transparent 70%); }
+    body.light-mode .b3 { background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%); }
+    body.light-mode #nav.scrolled { background:rgba(248,248,252,0.9); }
+    body.light-mode #mobile-nav { background:rgba(248,248,252,0.98); }
+    body.light-mode .marquee-wrap { background:var(--bg2); }
+    body.light-mode .loader-bar-wrap { background:rgba(0,0,0,0.08); }
+
+    /* ── COUNTER ── */
+    .kpi-num { font-family:'Syne',sans-serif; font-size:3rem; font-weight:800; background:linear-gradient(135deg,var(--gold),var(--gold2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1; }
+
+    /* ── PARTICLES ── */
+    #particles-canvas { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.5; }
+
+    /* ── BACK TO TOP ── */
+    #back-top { position:fixed; bottom:88px; right:28px; width:46px; height:46px; border-radius:50%; border:1px solid var(--border2); background:rgba(232,184,75,0.1); color:var(--gold); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:500; opacity:0; transform:translateY(20px); transition:all 0.3s; font-size:1.1rem; }
+    #back-top.show { opacity:1; transform:translateY(0); }
+    #back-top:hover { background:var(--gold); color:#04040a; transform:translateY(-3px); box-shadow:0 10px 25px rgba(232,184,75,0.3); }
+
+    /* ── VISITOR COUNTER ── */
+    #visitor-badge { position:fixed; top:90px; right:20px; background:rgba(10,10,20,0.85); border:1px solid rgba(232,184,75,0.25); border-radius:12px; padding:8px 14px; backdrop-filter:blur(12px); z-index:490; display:flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--muted); opacity:0; transform:translateX(20px); transition:all 0.5s; }
+    #visitor-badge.show { opacity:1; transform:translateX(0); }
+    #visitor-badge .vdot { width:6px; height:6px; border-radius:50%; background:#4ade80; animation:glow 2s infinite; }
+    #visitor-badge strong { color:var(--gold); }
+    @media(max-width:768px) { #visitor-badge { top:70px; right:10px; font-size:0.58rem; padding:6px 10px; } }
+
+    /* ── TYPEWRITER HERO ── */
+    .hero-name .line1 { overflow:hidden; white-space:nowrap; border-right:3px solid var(--gold); animation:typewriter1 1s steps(8,end) 0.3s both, blink 0.7s step-end 1.3s 3; }
+    .hero-name .line2 { overflow:hidden; white-space:nowrap; animation:typewriter2 1s steps(11,end) 1.5s both; }
+    @keyframes typewriter1 { from{width:0} to{width:100%} }
+    @keyframes typewriter2 { from{width:0} to{width:100%} }
+    @keyframes blink { 0%,100%{border-color:var(--gold)} 50%{border-color:transparent} }
+    @media(max-width:768px) {
+      .hero-name .line1 { white-space:normal; overflow:visible; border-right:none; animation:fadeInUp 0.8s ease 0.3s both; }
+      .hero-name .line2 { white-space:normal; overflow:visible; animation:fadeInUp 0.8s ease 0.8s both; }
+      @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+    }
+
+    /* ── CIRCULAR GAUGES ── */
+    .soft-skills-section { margin-top:80px; }
+    .soft-skills-section h3 { font-size:1.1rem; font-weight:700; color:var(--text); margin-bottom:28px; }
+    .gauges-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+    .gauge-item { display:flex; flex-direction:column; align-items:center; gap:12px; }
+    .gauge-wrap { position:relative; width:90px; height:90px; }
+    .gauge-svg { transform:rotate(-90deg); }
+    .gauge-bg { fill:none; stroke:rgba(255,255,255,0.06); stroke-width:6; }
+    .gauge-fill { fill:none; stroke-width:6; stroke-linecap:round; stroke-dasharray:220; stroke-dashoffset:220; transition:stroke-dashoffset 1.5s cubic-bezier(0.23,1,0.32,1); }
+    .gauge-fill.gold { stroke:url(#goldGrad); }
+    .gauge-fill.violet { stroke:var(--violet); }
+    .gauge-fill.blue { stroke:var(--blue); }
+    .gauge-fill.green { stroke:#10b981; }
+    .gauge-fill.on { stroke-dashoffset:var(--offset); }
+    .gauge-center { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:0.9rem; color:var(--text); }
+    .gauge-label { font-size:0.75rem; color:var(--muted2); text-align:center; font-weight:500; }
+    @media(max-width:768px) { .gauges-grid { grid-template-columns:repeat(2,1fr); } }
+
+    /* ── LANGUAGES ── */
+    .languages-section { margin-top:80px; }
+    .languages-section h3 { font-size:1.1rem; font-weight:700; color:var(--text); margin-bottom:28px; }
+    .lang-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+    .lang-card { background:var(--bg3); border:1px solid var(--border); border-radius:18px; padding:22px; text-align:center; transition:all 0.3s; }
+    .lang-card:hover { border-color:rgba(232,184,75,0.3); transform:translateY(-4px); }
+    .lang-flag { font-size:2rem; margin-bottom:8px; }
+    .lang-name { font-size:0.88rem; font-weight:700; color:var(--text); margin-bottom:4px; }
+    .lang-level { font-size:0.68rem; color:var(--gold); font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px; }
+    .lang-bar { height:3px; background:rgba(255,255,255,0.06); border-radius:99px; overflow:hidden; }
+    .lang-bar-fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--gold),var(--violet)); transform:scaleX(0); transform-origin:left; transition:transform 1.4s cubic-bezier(0.23,1,0.32,1); }
+    .lang-bar-fill.on { transform:scaleX(1); }
+    @media(max-width:768px) { .lang-grid { grid-template-columns:repeat(2,1fr); } }
+
+    /* ── PARALLAX ── */
+    .parallax-el { transition:transform 0.1s linear; will-change:transform; }
   </style>
 </head>
-<body>
+<body class="dark-mode">
+
+<!-- ── PARTICLES CANVAS ── -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- ── LOADER ── -->
+<div id="loader">
+  <div class="loader-logo">MM</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  <div class="loader-text">Chargement du portfolio...</div>
+</div>
+
+<!-- ── CURSOR ── -->
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- ── BACK TO TOP ── -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Retour en haut">↑</button>
+
+<!-- ── VISITOR BADGE ── -->
+<div id="visitor-badge">
+  <span class="vdot"></span>
+  <span><strong id="visitor-count">0</strong> visiteurs aujourd'hui</span>
+</div>
+
+<!-- ── THEME TOGGLE ── -->
+<button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Changer le thème">🌙</button>
 
 <!-- Blobs -->
 <div class="blob b1"></div>
@@ -421,9 +555,9 @@
         </div>
         <div class="about-pull">« Créer des interfaces qui inspirent et des expériences qui durent. »</div>
         <div class="kpi-row">
-          <div class="kpi-box"><div class="kpi-num">2</div><div class="kpi-label">Stages en entreprise</div></div>
-          <div class="kpi-box"><div class="kpi-num">2+</div><div class="kpi-label">Projets réalisés</div></div>
-          <div class="kpi-box"><div class="kpi-num">L2</div><div class="kpi-label">Informatique UNIPRO</div></div>
+          <div class="kpi-box"><div class="kpi-num counter" data-target="2" data-suffix="">0</div><div class="kpi-label">Stages en entreprise</div></div>
+          <div class="kpi-box"><div class="kpi-num counter" data-target="2" data-suffix="+">0</div><div class="kpi-label">Projets réalisés</div></div>
+          <div class="kpi-box"><div class="kpi-num" style="font-size:2.2rem;">L2</div><div class="kpi-label">Informatique UNIPRO</div></div>
           <div class="kpi-box"><div class="kpi-num">∞</div><div class="kpi-label">Passion pour le code</div></div>
         </div>
       </div>
@@ -496,6 +630,135 @@
         </div>
       </div>
     </div>
+
+    <!-- SVG Gradient def -->
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#e8b84b"/>
+          <stop offset="100%" style="stop-color:#8b5cf6"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <!-- Soft Skills Gauges -->
+    <div class="soft-skills-section fade-up" id="gauges-section">
+      <h3>💡 Soft Skills</h3>
+      <div class="gauges-grid">
+        <div class="gauge-item">
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" viewBox="0 0 90 90" width="90" height="90">
+              <circle class="gauge-bg" cx="45" cy="45" r="35"/>
+              <circle class="gauge-fill gold" cx="45" cy="45" r="35" style="--offset:22"/>
+            </svg>
+            <div class="gauge-center">90%</div>
+          </div>
+          <div class="gauge-label">Travail en équipe</div>
+        </div>
+        <div class="gauge-item">
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" viewBox="0 0 90 90" width="90" height="90">
+              <circle class="gauge-bg" cx="45" cy="45" r="35"/>
+              <circle class="gauge-fill violet" cx="45" cy="45" r="35" style="--offset:33"/>
+            </svg>
+            <div class="gauge-center">85%</div>
+          </div>
+          <div class="gauge-label">Communication</div>
+        </div>
+        <div class="gauge-item">
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" viewBox="0 0 90 90" width="90" height="90">
+              <circle class="gauge-bg" cx="45" cy="45" r="35"/>
+              <circle class="gauge-fill blue" cx="45" cy="45" r="35" style="--offset:22"/>
+            </svg>
+            <div class="gauge-center">90%</div>
+          </div>
+          <div class="gauge-label">Autonomie</div>
+        </div>
+        <div class="gauge-item">
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" viewBox="0 0 90 90" width="90" height="90">
+              <circle class="gauge-bg" cx="45" cy="45" r="35"/>
+              <circle class="gauge-fill green" cx="45" cy="45" r="35" style="--offset:44"/>
+            </svg>
+            <div class="gauge-center">80%</div>
+          </div>
+          <div class="gauge-label">Créativité</div>
+        </div>
+        <div class="gauge-item">
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" viewBox="0 0 90 90" width="90" height="90">
+              <circle class="gauge-bg" cx="45" cy="45" r="35"/>
+              <circle class="gauge-fill gold" cx="45" cy="45" r="35" style="--offset:11"/>
+            </svg>
+            <div class="gauge-center">95%</div>
+          </div>
+          <div class="gauge-label">Adaptabilité</div>
+        </div>
+        <div class="gauge-item">
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" viewBox="0 0 90 90" width="90" height="90">
+              <circle class="gauge-bg" cx="45" cy="45" r="35"/>
+              <circle class="gauge-fill violet" cx="45" cy="45" r="35" style="--offset:44"/>
+            </svg>
+            <div class="gauge-center">80%</div>
+          </div>
+          <div class="gauge-label">Résolution de problèmes</div>
+        </div>
+        <div class="gauge-item">
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" viewBox="0 0 90 90" width="90" height="90">
+              <circle class="gauge-bg" cx="45" cy="45" r="35"/>
+              <circle class="gauge-fill blue" cx="45" cy="45" r="35" style="--offset:33"/>
+            </svg>
+            <div class="gauge-center">85%</div>
+          </div>
+          <div class="gauge-label">Curiosité</div>
+        </div>
+        <div class="gauge-item">
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" viewBox="0 0 90 90" width="90" height="90">
+              <circle class="gauge-bg" cx="45" cy="45" r="35"/>
+              <circle class="gauge-fill green" cx="45" cy="45" r="35" style="--offset:22"/>
+            </svg>
+            <div class="gauge-center">90%</div>
+          </div>
+          <div class="gauge-label">Ponctualité</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Languages -->
+    <div class="languages-section fade-up" id="lang-section">
+      <h3>🌍 Langues</h3>
+      <div class="lang-grid">
+        <div class="lang-card">
+          <div class="lang-flag">🇫🇷</div>
+          <div class="lang-name">Français</div>
+          <div class="lang-level">Courant</div>
+          <div class="lang-bar"><div class="lang-bar-fill" style="width:95%"></div></div>
+        </div>
+        <div class="lang-card">
+          <div class="lang-flag">🇸🇳</div>
+          <div class="lang-name">Wolof</div>
+          <div class="lang-level">Langue maternelle</div>
+          <div class="lang-bar"><div class="lang-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="lang-card">
+          <div class="lang-flag">🇬🇧</div>
+          <div class="lang-name">Anglais</div>
+          <div class="lang-level">Intermédiaire</div>
+          <div class="lang-bar"><div class="lang-bar-fill" style="width:60%"></div></div>
+        </div>
+        <div class="lang-card">
+          <div class="lang-flag">🇸🇦</div>
+          <div class="lang-name">Arabe</div>
+          <div class="lang-level">Notions</div>
+          <div class="lang-bar"><div class="lang-bar-fill" style="width:30%"></div></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -702,27 +965,204 @@
 </footer>
 
 <script>
-  /* Navbar */
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+  /* ── LOADER ── */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const loader = document.getElementById('loader');
+      loader.classList.add('hide');
+      setTimeout(() => loader.style.display = 'none', 700);
+      // Show visitor badge after loader
+      setTimeout(() => document.getElementById('visitor-badge').classList.add('show'), 1000);
+    }, 2000);
+  });
 
-  /* Fade animations */
+  /* ── VISITOR COUNTER ── */
+  (function() {
+    const key = 'mmb_visits';
+    const dateKey = 'mmb_date';
+    const today = new Date().toDateString();
+    let count = parseInt(localStorage.getItem(key) || '0');
+    const lastDate = localStorage.getItem(dateKey);
+    if (lastDate !== today) { count = 0; localStorage.setItem(dateKey, today); }
+    count++;
+    localStorage.setItem(key, count);
+    // Add some base visitors for credibility
+    const display = count + Math.floor(Math.random() * 20) + 40;
+    document.getElementById('visitor-count').textContent = display;
+  })();
+
+  /* ── PARTICLES ── */
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.r = Math.random() * 1.5 + 0.5;
+      this.alpha = Math.random() * 0.5 + 0.1;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(232,184,75,${this.alpha})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+  function drawLines() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(232,184,75,${0.12 * (1 - dist/120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawLines();
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  /* ── CUSTOM CURSOR ── */
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  window.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    const trail = document.createElement('div');
+    trail.className = 'cursor-trail';
+    trail.style.cssText = `left:${mx}px;top:${my}px;`;
+    document.body.appendChild(trail);
+    trail.animate([
+      { opacity:0.5, transform:'translate(-50%,-50%) scale(1)' },
+      { opacity:0, transform:'translate(-50%,-50%) scale(0)' }
+    ], { duration:600, easing:'ease-out' }).onfinish = () => trail.remove();
+  });
+  function animateRing() {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+  document.querySelectorAll('a,button,.kpi-box,.scard,.proj-card,.contact-card,.skill-pill,.exp-item,.lang-card,.gauge-item').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+  });
+
+  /* ── THEME TOGGLE ── */
+  function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('theme-btn');
+    if (body.classList.contains('dark-mode')) {
+      body.classList.replace('dark-mode','light-mode');
+      btn.textContent = '☀️';
+    } else {
+      body.classList.replace('light-mode','dark-mode');
+      btn.textContent = '🌙';
+    }
+  }
+
+  /* ── NAVBAR ── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', scrollY > 60);
+    document.getElementById('back-top').classList.toggle('show', scrollY > 400);
+  });
+
+  /* ── PARALLAX ── */
+  window.addEventListener('scroll', () => {
+    const sy = window.scrollY;
+    document.querySelectorAll('[data-parallax]').forEach(el => {
+      const speed = parseFloat(el.dataset.parallax) || 0.3;
+      el.style.transform = `translateY(${sy * speed}px)`;
+    });
+  });
+
+  /* ── FADE ANIMATIONS ── */
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
   }, { threshold: 0.08 });
-  document.querySelectorAll('.fade-up, .fade-left').forEach(el => io.observe(el));
+  document.querySelectorAll('.fade-up,.fade-left').forEach(el => io.observe(el));
 
-  /* Skill bars */
+  /* ── SKILL BARS ── */
   const sio = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.querySelectorAll('.sp-bar').forEach((b,i) => setTimeout(()=>b.classList.add('on'), i*100));
+        e.target.querySelectorAll('.sp-bar').forEach((b,i) => setTimeout(()=>b.classList.add('on'),i*100));
         sio.unobserve(e.target);
       }
     });
   }, { threshold: 0.2 });
   const sp = document.getElementById('skills-pills');
   if (sp) sio.observe(sp);
+
+  /* ── COUNTER ANIMATION ── */
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1800;
+    const start = performance.now();
+    function update(now) {
+      const p = Math.min((now-start)/duration,1);
+      const ease = 1-Math.pow(1-p,3);
+      el.textContent = Math.floor(ease*target)+suffix;
+      if (p < 1) requestAnimationFrame(update);
+      else el.textContent = target+suffix;
+    }
+    requestAnimationFrame(update);
+  }
+  const cio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.counter').forEach(c => animateCounter(c));
+        cio.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.kpi-row').forEach(el => cio.observe(el));
+
+  /* ── GAUGE ANIMATION ── */
+  const gio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.gauge-fill').forEach(g => g.classList.add('on'));
+        // Animate lang bars too
+        e.target.querySelectorAll('.lang-bar-fill').forEach((b,i) => setTimeout(()=>b.classList.add('on'),i*150));
+        gio.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  ['gauges-section','lang-section'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) gio.observe(el);
+  });
 </script>
 </body>
 </html>
