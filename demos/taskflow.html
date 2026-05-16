@@ -82,12 +82,108 @@
     .fade-in { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
 
+    /* Mobile header bar */
+    .mobile-header { display: none; background: #111120; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 14px 20px; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 40; }
+    .mobile-header h1 { font-size: 1.1rem; font-weight: 700; color: white; }
+    .mobile-header h1 span { color: #a78bfa; }
+
+    /* Bottom navigation for mobile */
+    .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #111120; border-top: 1px solid rgba(255,255,255,0.07); padding: 8px 0 12px; z-index: 40; justify-content: space-around; }
+    .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; padding: 4px 12px; border-radius: 10px; transition: all 0.2s; color: #7a7a9a; font-size: 0.6rem; font-family: 'Space Grotesk', sans-serif; }
+    .bottom-nav-item.active { color: #a78bfa; }
+    .bottom-nav-item span:first-child { font-size: 1.3rem; }
+
     @media(max-width:768px) {
-      .sidebar { display: none; }
+      /* Hide sidebar, show mobile elements */
+      .sidebar { display: none !important; }
+      .mobile-header { display: flex !important; }
+      .bottom-nav { display: flex !important; }
+
+      /* Layout fixes */
+      body { overflow-x: hidden; }
+      .flex.h-screen { height: auto !important; min-height: 100vh; }
+      main { padding-bottom: 90px !important; }
+
+      /* Header bar */
+      main > .border-b { padding: 10px 16px !important; flex-wrap: wrap; gap: 8px !important; }
+      main > .border-b h2 { font-size: 0.95rem !important; }
+      main > .border-b p { font-size: 0.68rem !important; }
+      main > .border-b select { font-size: 0.72rem !important; padding: 5px 8px !important; }
+      main > .border-b button { padding: 8px 14px !important; font-size: 0.75rem !important; gap: 4px !important; }
+
+      /* Main content */
+      main > .flex-1 { padding: 14px 16px !important; }
+
+      /* Stats grid 2 cols on mobile */
+      .grid.grid-cols-2.md\\:grid-cols-4 { grid-template-columns: repeat(2,1fr) !important; gap: 10px !important; }
+      .stat-card { padding: 14px 12px !important; }
+      .stat-card .text-2xl { font-size: 1.4rem !important; }
+
+      /* Filter bar scrollable */
+      .flex.flex-wrap.gap-2.mb-5 {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        padding-bottom: 8px !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 8px !important;
+      }
+      .flex.flex-wrap.gap-2.mb-5::-webkit-scrollbar { display: none; }
+      .filter-pill { flex-shrink: 0 !important; white-space: nowrap !important; padding: 5px 12px !important; font-size: 0.72rem !important; }
+      #search-tasks { flex-shrink: 0 !important; min-width: 120px !important; }
+
+      /* Task cards no hover transform on mobile */
+      .task-card { cursor: default !important; }
+      .task-card:hover { transform: none !important; }
+      .task-card .flex.gap-3 { gap: 10px !important; }
+
+      /* Modal full width on mobile */
+      .modal-box {
+        width: 96% !important;
+        max-width: 96% !important;
+        padding: 20px 16px !important;
+        max-height: 92vh;
+        overflow-y: auto;
+        border-radius: 16px !important;
+      }
+      .form-row { grid-template-columns: 1fr !important; gap: 0 !important; }
+
+      /* Toast above bottom nav */
+      .toast { bottom: 80px !important; right: 12px !important; left: 12px !important; justify-content: center; font-size: 0.8rem !important; }
+
+      /* Progress section */
+      .mb-6 .flex.justify-between { font-size: 0.72rem !important; }
     }
   </style>
 </head>
 <body>
+
+<!-- Mobile Header -->
+<div class="mobile-header">
+  <h1>Task<span>Flow</span></h1>
+  <button onclick="openModal()" class="btn-primary px-4 py-2 rounded-xl font-semibold text-sm flex items-center gap-1" style="font-size:0.8rem;">
+    + Tâche
+  </button>
+</div>
+
+<!-- Bottom Navigation Mobile -->
+<div class="bottom-nav">
+  <div class="bottom-nav-item active" onclick="setFilter('all',this);document.querySelectorAll('.bottom-nav-item').forEach(x=>x.classList.remove('active'));this.classList.add('active')">
+    <span>📋</span><span>Toutes</span>
+  </div>
+  <div class="bottom-nav-item" onclick="setFilter('active',this);document.querySelectorAll('.bottom-nav-item').forEach(x=>x.classList.remove('active'));this.classList.add('active')">
+    <span>⚡</span><span>En cours</span>
+  </div>
+  <div class="bottom-nav-item" onclick="setFilter('completed',this);document.querySelectorAll('.bottom-nav-item').forEach(x=>x.classList.remove('active'));this.classList.add('active')">
+    <span>✅</span><span>Terminées</span>
+  </div>
+  <div class="bottom-nav-item" onclick="setFilter('high',this);document.querySelectorAll('.bottom-nav-item').forEach(x=>x.classList.remove('active'));this.classList.add('active')">
+    <span>🔴</span><span>Urgentes</span>
+  </div>
+  <div class="bottom-nav-item" onclick="openModal()">
+    <span>➕</span><span>Ajouter</span>
+  </div>
+</div>
 
 <div class="flex h-screen overflow-hidden">
 
